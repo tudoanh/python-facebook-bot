@@ -14,7 +14,3 @@ In *config.json*:
 
 In *events_fb.py*:
 **CIRCLE** : A tuple contain lat and long of city your want to scan, and distance as your desire
-
-
-# Results
-Results will be export to folder Results/, with each file for each place that has events.
