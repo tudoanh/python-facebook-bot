@@ -1,7 +1,0 @@
-{
-    "client_id" : "Your app id",
-    "client_secret" : "You app secret",
-    "distance" : 300,
-    "keyword" : "*",
-    "limit" : 30
-}
