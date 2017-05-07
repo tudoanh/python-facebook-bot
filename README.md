@@ -1,15 +1,25 @@
-# Introduce
-My script to crawl all events of a city on Facebook.  
-Using Facebook Graph API to crawl.
+#              Python Facebook Bot
+====================
 
 
-# How to use
-In *config.json*:  
-**client_id** & **client_secret** : Your app ID and Secret code 
-**lat** & **long**: Lat and Long of location you want to crawl  
-**distance** : In metter  
-**keyword** : if you want to crawl with specific keyword, just fill here  
-**limit** : limit the results  
+### What is this?
+----------------
+  This is a Facebook Bot/Assistant, writen in Python and using Facebook API for some
+  specific tasks.  
+  At the moment, I only implement it some functions to crawl/get Facebook's events by
+  location, since Facebook shutdown that APIs.  
 
-In *events_fb.py*:
-**CIRCLE** : A tuple contain lat and long of city your want to scan, and distance as your desire
+### Installation
+---------------
+  To install python-facebook-bot, simply:
+  ```
+  pip install python-facebook-bot
+  ```  
+
+### What do I need? (requirements.txt)
+------------------
+  Right now, I'm only using **requests** for requesting APIs.  
+
+### Where are the tests?
+-----------------------
+  Just run `python setup.py test`
