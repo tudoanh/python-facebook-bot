@@ -127,7 +127,8 @@ def get_events_by_location(latitude, longitude, place_type='*',
     :param base_time: Limit started day to crawl events. Format: YYYY-MM-DD
     :param fields: List of event's field. See more at
         https://developers.facebook.com/docs/graph-api/reference/event
-    :param f: Extra function, like yield data to Database.
+    :param f: Extra function, like yield data to Database. In 'kwargs' dict
+        you will have events data in 'nodes' and page info in 'page_info'
     """
     CIRCLE = (latitude, longitude, distance, )
     events = []
@@ -140,7 +141,11 @@ def get_events_by_location(latitude, longitude, place_type='*',
                                    fields=fields)[page_id]
                 if 'events' in nodes:
                     if f:
-                        f()
+                        page_info = get_page_info(page_id)
+                        kwargs = {}
+                        kwargs['nodes'] = nodes
+                        kwargs['page_info'] = page_info
+                        f(**kwargs)
                     else:
                         events.append(nodes['events']['data'])
                 else:
