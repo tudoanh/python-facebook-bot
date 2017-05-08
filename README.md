@@ -1,3 +1,5 @@
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com)  
+
 # Python Facebook Bot
 *Make your life easier*  
 
