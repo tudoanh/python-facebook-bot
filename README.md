@@ -1,4 +1,4 @@
-[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com)  
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/contains-cat-gifs.svg)](http://forthebadge.com)  
 
 # Python Facebook Bot
 *Make your life easier*  
@@ -62,3 +62,6 @@
 -----------------------
   Just run `$ python setup.py test`  
   It's may take a while, because we need to scan all available pages.
+
+*And here is your Cat*  
+[](http://media3.giphy.com/media/1341dJuJNgSDgk/giphy.gif)
