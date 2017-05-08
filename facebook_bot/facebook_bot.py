@@ -1,3 +1,4 @@
+from functools import wraps
 import os
 import logging
 import time
@@ -114,7 +115,7 @@ def get_events(page_id, base_time=TODAY, fields=EVENT_FIELDS):
 
 def get_events_by_location(latitude, longitude, place_type='*',
                            distance=500, limit=100, scan_radius=200,
-                           base_time=TODAY, fields=EVENT_FIELDS):
+                           base_time=TODAY, fields=EVENT_FIELDS, f=None):
     """
     Get all events from given location circle.
 
@@ -126,6 +127,7 @@ def get_events_by_location(latitude, longitude, place_type='*',
     :param base_time: Limit started day to crawl events. Format: YYYY-MM-DD
     :param fields: List of event's field. See more at
         https://developers.facebook.com/docs/graph-api/reference/event
+    :param f: Extra function, like yield data to Database.
     """
     CIRCLE = (latitude, longitude, distance, )
     events = []
@@ -137,7 +139,10 @@ def get_events_by_location(latitude, longitude, place_type='*',
                 nodes = get_events(page_id, base_time=base_time,
                                    fields=fields)[page_id]
                 if 'events' in nodes:
-                    events.append(nodes['events']['data'])
+                    if f:
+                        f()
+                    else:
+                        events.append(nodes['events']['data'])
                 else:
                     pass
 
