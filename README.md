@@ -14,11 +14,11 @@
 
 ### Installation
 ---------------
-  To install python-facebook-bot, simply:  
-    
-    ```
-    $ pip install python-facebook-bot
-    ```  
+  To install **python-facebook-bot**, simply:  
+  
+  ```
+  $ pip install python-facebook-bot
+  ```  
 ### How to use?
 ---------------
   ```python
