@@ -14,7 +14,7 @@
 
 ### Installation
 ---------------
-    To install python-facebook-bot, simply:  
+  To install python-facebook-bot, simply:  
     
     ```
     $ pip install python-facebook-bot
