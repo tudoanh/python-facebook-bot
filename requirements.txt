@@ -4,4 +4,5 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
+click-spinner==0.1.7
 requests==2.13.0
