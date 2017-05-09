@@ -14,6 +14,11 @@ try:
 except KeyError as e:
     logging.error('You must have client\'s id and secret in environment first')
 
+
+s = requests.Session()
+adapter = requests.adapters.HTTPAdapter(max_retries=20)
+s.mount('https://', adapter)
+
 TODAY = time.strftime("%Y-%m-%d")
 BASE_URL = 'https://graph.facebook.com/'
 API_VERSION = 'v2.9/'
@@ -63,7 +68,7 @@ def get_page_ids(latitude, longitude, query_agrument='*',
     :param distance: Radius of location's circle. Limit for better speed.
     :param limit: Pagination limit. You should let it by default.
     '''
-    pages_id = requests.get(BASE_URL +
+    pages_id = s.get(BASE_URL +
                             API_VERSION +
                             SEARCH_PAGE_PATH.format(
                                 query_agrument,
@@ -80,7 +85,7 @@ def get_page_ids(latitude, longitude, query_agrument='*',
     # Process Facebook API paging
     while 'paging' in pages_id:
         if 'next' in pages_id['paging']:
-            pages_id = requests.get(pages_id["paging"]['next']).json()
+            pages_id = s.get(pages_id["paging"]['next']).json()
             for a in pages_id['data']:
                 pages_id_list.append(a['id'])
 
@@ -99,7 +104,7 @@ def get_events(page_id, base_time=TODAY, fields=EVENT_FIELDS):
     :param fields: List of event's fields. See more at
         https://developers.facebook.com/docs/graph-api/reference/event
     '''
-    events = requests.get(BASE_URL + API_VERSION,
+    events = s.get(BASE_URL + API_VERSION,
                           params={
                             "ids": page_id,
                             "fields": """
@@ -161,7 +166,7 @@ def get_page_info(page_id, fields=PAGE_FIELDS):
     :param fields: See more here
         https://developers.facebook.com/docs/graph-api/reference/page
     """
-    info = requests.get(BASE_URL + API_VERSION,
+    info = s.get(BASE_URL + API_VERSION,
                         params={
                             'ids': page_id,
                             'fields': ','.join(fields),
