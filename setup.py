@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='python-facebook-bot',
-      version='0.1.6',
+      version='0.1.7',
       description='Using API to get Facebook Events by location, etc... with Python',
       url='http://github.com/tudoanh/python-facebook-bot',
       author='Do Anh Tu',

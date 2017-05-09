@@ -112,8 +112,8 @@ def get_events(page_id, base_time=TODAY, fields=EVENT_FIELDS):
 
 
 def get_events_by_location(latitude, longitude, place_type='*',
-                           distance=500, limit=100, scan_radius=200,
-                           base_time=TODAY, fields=EVENT_FIELDS, f=None):
+                           distance=1000, scan_radius=500, base_time=TODAY,
+                           fields=EVENT_FIELDS, f=None):
     """
     Get all events from given location circle.
 
@@ -133,8 +133,8 @@ def get_events_by_location(latitude, longitude, place_type='*',
 
     for point in generate_coordinate(*CIRCLE, scan_radius=scan_radius):
         page_list = get_page_ids(latitude=point[0], longitude=point[1],
-                                 query_agrument=place_type, distance=distance,
-                                 limit=limit)
+                                 query_agrument=place_type,
+                                 distance=scan_radius)
         for page_id in page_list:
             nodes = get_events(page_id, base_time=base_time,
                                fields=fields)[page_id]
