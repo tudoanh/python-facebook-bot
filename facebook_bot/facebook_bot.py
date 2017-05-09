@@ -1,9 +1,7 @@
-from functools import wraps
 import os
 import logging
 import time
 import requests
-import click_spinner
 
 from .coorcal import generate_coordinate
 
@@ -132,26 +130,26 @@ def get_events_by_location(latitude, longitude, place_type='*',
     """
     CIRCLE = (latitude, longitude, distance, )
     events = []
-    with click_spinner.spinner():
-        for point in generate_coordinate(*CIRCLE, scan_radius=scan_radius):
-            page_list = get_page_ids(latitude, longitude, place_type,
-                                     distance, limit)
-            for page_id in page_list:
-                nodes = get_events(page_id, base_time=base_time,
-                                   fields=fields)[page_id]
-                if 'events' in nodes:
-                    if f:
-                        page_info = get_page_info(page_id)
-                        kwargs = {}
-                        kwargs['nodes'] = nodes
-                        kwargs['page_info'] = page_info
-                        f(**kwargs)
-                    else:
-                        events.append(nodes['events']['data'])
-                else:
-                    pass
 
-        return events
+    for point in generate_coordinate(*CIRCLE, scan_radius=scan_radius):
+        page_list = get_page_ids(latitude, longitude, place_type,
+                                 distance, limit)
+        for page_id in page_list:
+            nodes = get_events(page_id, base_time=base_time,
+                               fields=fields)[page_id]
+            if 'events' in nodes:
+                if f:
+                    page_info = get_page_info(page_id)
+                    kwargs = {}
+                    kwargs['nodes'] = nodes
+                    kwargs['page_info'] = page_info
+                    f(**kwargs)
+                else:
+                    events.append(nodes['events']['data'])
+            else:
+                pass
+
+    return events
 
 
 def get_page_info(page_id, fields=PAGE_FIELDS):
