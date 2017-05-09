@@ -133,7 +133,7 @@ def get_events_by_location(latitude, longitude, place_type='*',
 
     for point in generate_coordinate(*CIRCLE, scan_radius=scan_radius):
         page_list = get_page_ids(latitude=point[0], longitude=point[1],
-                                 place_type=place_type, distance=distance,
+                                 query_agrument=place_type, distance=distance,
                                  limit=limit)
         for page_id in page_list:
             nodes = get_events(page_id, base_time=base_time,
