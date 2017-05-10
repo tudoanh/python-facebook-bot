@@ -142,7 +142,7 @@ def get_events_by_location(latitude, longitude, place_type='*',
                                  distance=scan_radius)
         for page_id in page_list:
             nodes = get_events(page_id, base_time=base_time,
-                               fields=fields)[page_id]
+                               fields=fields).get(page_id, {})
             if 'events' in nodes:
                 if f:
                     page_info = get_page_info(page_id)
