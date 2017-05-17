@@ -30,6 +30,7 @@ SEARCH_PAGE_PATH = 'search?type=place&q={0}&center={1},{2}'\
 EVENT_FIELDS = ['id',
                 'name',
                 'start_time',
+                'end_time',
                 'description',
                 'place',
                 'type',
@@ -69,16 +70,16 @@ def get_page_ids(latitude, longitude, query_agrument='*',
     :param limit: Pagination limit. You should let it by default.
     '''
     pages_id = s.get(BASE_URL +
-                            API_VERSION +
-                            SEARCH_PAGE_PATH.format(
-                                query_agrument,
-                                latitude,
-                                longitude,
-                                distance,
-                                limit,
-                                token
-                                )
-                            ).json()
+                     API_VERSION +
+                     SEARCH_PAGE_PATH.format(
+                         query_agrument,
+                         latitude,
+                         longitude,
+                         distance,
+                         limit,
+                         token
+                         )
+                     ).json()
 
     pages_id_list = [i['id'] for i in pages_id['data']]
 
@@ -105,13 +106,13 @@ def get_events(page_id, base_time=TODAY, fields=EVENT_FIELDS):
         https://developers.facebook.com/docs/graph-api/reference/event
     '''
     events = s.get(BASE_URL + API_VERSION,
-                          params={
-                            "ids": page_id,
-                            "fields": """
-                                      events.fields({0}).since({1})
-                                      """.format(','.join(fields), base_time),
-                            "access_token": token,
-                          })
+                   params={
+                     "ids": page_id,
+                     "fields": """
+                               events.fields({0}).since({1})
+                               """.format(','.join(fields), base_time),
+                     "access_token": token,
+                   })
 
     return events.json()
 
@@ -142,7 +143,7 @@ def get_events_by_location(latitude, longitude, place_type='*',
                                  distance=scan_radius)
         for page_id in page_list:
             nodes = get_events(page_id, base_time=base_time,
-                               fields=fields).get(page_id, {})
+                               fields=fields).get(page_id, )
             if 'events' in nodes:
                 if f:
                     page_info = get_page_info(page_id)
@@ -167,9 +168,9 @@ def get_page_info(page_id, fields=PAGE_FIELDS):
         https://developers.facebook.com/docs/graph-api/reference/page
     """
     info = s.get(BASE_URL + API_VERSION,
-                        params={
-                            'ids': page_id,
-                            'fields': ','.join(fields),
-                            'access_token': token
-                        }).json()
+                 params={
+                     'ids': page_id,
+                     'fields': ','.join(fields),
+                     'access_token': token
+                 }).json()
     return info
