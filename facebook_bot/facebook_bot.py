@@ -52,9 +52,24 @@ PAGE_FIELDS = ['id',
                'link']
 
 # Get App Access Token
-token = requests.get(BASE_URL +
-                     API_VERSION +
-                     TOKEN_PATH).json()['access_token']
+token = s.get(BASE_URL +
+              API_VERSION +
+              TOKEN_PATH).json()['access_token']
+
+
+def get_event_info(event_id, fields=EVENT_FIELDS):
+    '''
+    Get specific event's infomation.
+    '''
+    fields_param = ','.join(fields)
+    data = s.get(BASE_URL + API_VERSION,
+                 params={
+                    "ids": event_id,
+                    "fields": fields_param,
+                    "access_token": token,
+                 })
+
+    return data.json()
 
 
 def get_page_ids(latitude, longitude, query_agrument='*',
