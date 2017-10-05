@@ -111,7 +111,7 @@ def get_page_ids(latitude, longitude, query_agrument='*',
 def get_events(page_id, base_time=TODAY, fields=EVENT_FIELDS):
     '''
     For each page ID, find all events (if have any) of that Page
-    from given time.
+    from given time. Return JSON
 
     Return a dictionary of page's infos and it's events.
 
@@ -136,7 +136,7 @@ def get_events_by_location(latitude, longitude, place_type='*',
                            distance=1000, scan_radius=500, base_time=TODAY,
                            fields=EVENT_FIELDS, f=None):
     """
-    Get all events from given location circle.
+    Get all events from given location circle. Return a generator of JSONs.
 
     :param latitude: Latitude of location's center
     :param longitude: Longitude of location's center
@@ -150,7 +150,6 @@ def get_events_by_location(latitude, longitude, place_type='*',
         you will have events data in 'nodes' and page info in 'page_info'
     """
     CIRCLE = (latitude, longitude, distance, )
-    events = []
 
     for point in generate_coordinate(*CIRCLE, scan_radius=scan_radius):
         page_list = get_page_ids(latitude=point[0], longitude=point[1],
@@ -167,16 +166,14 @@ def get_events_by_location(latitude, longitude, place_type='*',
                     kwargs['page_info'] = page_info
                     f(**kwargs)
                 else:
-                    events.append(nodes['events']['data'])
+                    yield nodes['events']['data']
             else:
                 pass
-
-    return events
 
 
 def get_page_info(page_id, fields=PAGE_FIELDS):
     """
-    Get info of given Page ID
+    Get info of given Page ID. Return JSON
 
     :param page_id: ID of page
     :param fields: See more here
